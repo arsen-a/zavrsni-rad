@@ -16,6 +16,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $stmt->bindParam(':created_at', $created_at);
 
     $stmt->execute();
+    header('Location: /index.php');
 }
 
 ?>
@@ -37,19 +38,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             <div class="col-sm-8 blog-main">
                 <div class="form-container">
+                    <div class="alert alert-danger" id="alertBox">
+                        <strong>Failed submit!</strong> Please fill out all remaining fields.
+                    </div>
                     <form class="create-post-form" action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST">
                         <div>
-                            <h4>Your full name:</h4><input type="text" name="author" placeholder="John Doe" required>
+                            <h4>Your full name:</h4><input type="text" id="author" name="author" placeholder="John Doe" required>
                         </div>
                         <div>
-                            <h4>Post title:</h4><input type="text" name="title" placeholder="My new post" required>
+                            <h4>Post title:</h4><input type="text" id="title" name="title" placeholder="My new post" required>
                         </div>
                         <div>
-                            <textarea class="post-body" name="body" placeholder="Post body"></textarea>
+                            <textarea class="post-body" id="body" name="body" placeholder="Post body" required></textarea>
                         </div>
 
                         <div class="submit-btn-div">
-                            <input class="submit-btn" type="submit" value="Create a new post">
+                            <input class="submit-btn" id="submitPost" type="submit" value="Create a new post">
                         </div>
 
                     </form>
@@ -58,7 +62,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </div><!-- /.blog-main -->
             <?php include('./templates/sidebar.php'); ?>
         </div><!-- /.row -->
+        <script>
+            const author = document.getElementById('author').value;
+            const title = document.getElementById('title').value;
+            const body = document.getElementById('body').value;
+            const commentSubmitBtn = document.getElementById('submitPost');
 
+            commentSubmitBtn.addEventListener('click', function() {
+                if (author === "" || title === "" || body === "") {
+                    alertBox.style.display = 'block';
+                }
+            });
+        </script>
     </main><!-- /.container -->
 
     <?php include('./templates/footer.php') ?>
