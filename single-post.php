@@ -1,5 +1,6 @@
 <?php
 require('./database/dbconnect.php');
+
 $post_id = $_GET['post_id'];
 
 $query1 = 'SELECT * FROM posts WHERE id = :post_id';
@@ -50,12 +51,37 @@ $comments = $stmt2->fetchAll();
 
                 </div>
 
-                <button type="button" class="btn btn-default" id="show-hide-btn">Hide Comments</button>
+                <div class="alert alert-danger" id="alertBox">
+                    <strong>Failed submit!</strong> Please fill out all remaining fields.
+                </div>
+                <h2>Add New Comment</h2>
+                <div class="add-new-comment">
+                    <form action="./create-comment.php" method="POST" class="add-comm-form">
+
+                        <input type="hidden" name="post_id" value="<?php echo $post['id']; ?>">
+                        <div>
+                            <h4>Full Name:</h4> <input type="text" name="fullname" id="fullName" placeholder="John Doe" required>
+                        </div>
+                        <div>
+                            <h4>Your Comment:</h4>
+                        </div>
+                        <div>
+                            <textarea name="text" id="commentBox" required></textarea>
+                        </div>
+                        <button type=" submit" id="commentSubmit" class="btn btn-default">Submit</button>
+
+                    </form>
+                </div>
+
+                <button type=" button" class="btn btn-default" id="show-hide-btn">Hide Comments</button>
 
                 <div class="comments" id="comment-section">
-                    <ul>
+                    <ul class="comment-list">
                         <?php foreach ($comments as $comm) { ?>
-                            <li><strong><?php echo $comm['author'] . ': '; ?></strong><?php echo $comm['text']; ?></li>
+                            <li>
+                                <strong><?php echo $comm['author'] . ': '; ?></strong><?php echo $comm['text']; ?>
+                                <button type="button" class="btn btn-default"><a href="./delete-comment.php?comm_id=<?php echo $comm['id']; ?>&post_id=<?php echo $_GET['post_id']; ?>">Delete</a></button>
+                            </li>
                             <hr>
                         <?php } ?>
                     </ul>
@@ -80,6 +106,17 @@ $comments = $stmt2->fetchAll();
             } else {
                 comments.style.display = "block";
                 showHideBtn.innerHTML = "Hide Comments";
+            }
+        });
+
+        const fullName = document.getElementById('fullName').value;
+        const commentBox = document.getElementById('commentBox').value;
+        const alertBox = document.getElementById('alertBox');
+        const commentSubmitBtn = document.getElementById('commentSubmit');
+
+        commentSubmitBtn.addEventListener('click', function() {
+            if (fullName === "" || commentBox === "") {
+                alertBox.style.display = 'block';
             }
         });
     </script>

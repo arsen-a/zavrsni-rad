@@ -80,3 +80,53 @@ input:focus {
 .btn-default {
   margin: 15px 0;
 }
+
+.add-comm-form > div > textarea {
+  resize: none;
+  width: 300px;
+  height: 100px;
+  padding: 5px;
+}
+
+.add-comm-form > div > input {
+  margin-left: 10px;
+  padding: 5px;
+}
+
+.add-comm-form > div {
+  display: flex;
+  align-items: center;
+  padding: 10px 0;
+}
+
+.add-comm-form > div > h4 {
+  margin: 0;
+}
+
+.add-new-comment {
+  border: 1px solid #e05a5a;
+  border-radius: 15px;
+  display: flex;
+  justify-content: center;
+  padding: 10px;
+}
+
+.alert-danger {
+  display: none;
+}
+
+.comment-list > li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.comment-list > li > .btn-default {
+  font-weight: bold;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.comment-list > li > .btn-default > a {
+  color: rgb(179, 0, 0);
+  text-decoration: none;
+}
