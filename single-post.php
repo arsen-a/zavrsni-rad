@@ -46,6 +46,7 @@ $comments = $stmt2->fetchAll();
                         <h2 class="blog-post-title"><?php echo $post['title'] ?></h2>
                     </a>
                     <p class="blog-post-meta"><?php echo $post['created_at'] . " "; ?> by <a href="#"><?php echo " " . $post['author']; ?></a></p>
+                    <button type="button" id="del-post-btn" class="btn btn-primary">Delete Post</button>
                     <hr>
                     <p><?php echo $post['body']; ?></p>
 
@@ -58,7 +59,7 @@ $comments = $stmt2->fetchAll();
                 <div class="add-new-comment">
                     <form action="./create-comment.php" method="POST" class="add-comm-form">
 
-                        <input type="hidden" name="post_id" value="<?php echo $post['id']; ?>">
+                        <input type="hidden" id="postId" name="post_id" value="<?php echo $post['id']; ?>">
                         <div>
                             <h4>Full Name:</h4> <input type="text" name="fullname" id="fullName" placeholder="John Doe" required>
                         </div>
@@ -117,6 +118,17 @@ $comments = $stmt2->fetchAll();
         commentSubmitBtn.addEventListener('click', function() {
             if (fullName === "" || commentBox === "") {
                 alertBox.style.display = 'block';
+            }
+        });
+
+        const delPostBtn = document.getElementById('del-post-btn');
+        const postId = document.getElementById('postId').value;
+        delPostBtn.addEventListener('click', function() {
+            let del = confirm("Do you really want to delete this post?");
+            if (del === true) {
+                let delPost = "/delete-post.php?post_id=";
+                let delLoc = delPost.concat(postId);
+                window.location.href = delLoc;
             }
         });
     </script>
