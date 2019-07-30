@@ -76,3 +76,7 @@ input:focus {
   color: white;
   font-weight: bold;
 }
+
+.btn-default {
+  margin: 15px 0;
+}

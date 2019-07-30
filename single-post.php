@@ -50,7 +50,9 @@ $comments = $stmt2->fetchAll();
 
                 </div>
 
-                <div class="comments">
+                <button type="button" class="btn btn-default" id="show-hide-btn">Hide Comments</button>
+
+                <div class="comments" id="comment-section">
                     <ul>
                         <?php foreach ($comments as $comm) { ?>
                             <li><strong><?php echo $comm['author'] . ': '; ?></strong><?php echo $comm['text']; ?></li>
@@ -66,6 +68,22 @@ $comments = $stmt2->fetchAll();
     </main><!-- /.container -->
 
     <?php include('./templates/footer.php') ?>
+
+    <script type="text/javascript">
+        const showHideBtn = document.getElementById("show-hide-btn");
+        const comments = document.getElementById("comment-section");
+
+        showHideBtn.addEventListener("click", function() {
+            if (comments.style.display === "block") {
+                comments.style.display = "none";
+                showHideBtn.innerHTML = "Show Comments";
+            } else {
+                comments.style.display = "block";
+                showHideBtn.innerHTML = "Hide Comments";
+            }
+        });
+    </script>
+
 </body>
 
 </html>
