@@ -1,3 +1,17 @@
+<?php
+require('./database/dbconnect.php');
+$post_id = $_GET['post_id'];
+
+$query = 'SELECT * FROM posts WHERE id = :post_id';
+$stmt = $connection->prepare($query);
+$stmt->bindParam(':post_id', $post_id);
+$stmt->execute();
+$stmt->setFetchMode(PDO::FETCH_ASSOC);
+$post = $stmt->fetch();
+
+
+?>
+
 <!doctype html>
 <html lang="en">
 
@@ -16,18 +30,14 @@
             <div class="col-sm-8 blog-main">
 
                 <div class="blog-post">
-                    <h2 class="blog-post-title">Sample blog post</h2>
-                    <p class="blog-post-meta">January 1, 2014 by <a href="#">Mark</a></p>
-
-                    <p>This blog post shows a few different types of content that's supported and styled with Bootstrap. Basic typography, images, and code are all supported.</p>
+                    <a href="./single-post.php?post_id=<?php echo $post['id']; ?>">
+                        <h2 class="blog-post-title"><?php echo $post['title'] ?></h2>
+                    </a>
+                    <p class="blog-post-meta"><?php echo $post['created_at'] . " "; ?> by <a href="#"><?php echo " " . $post['author']; ?></a></p>
                     <hr>
-                    <p>Cum sociis natoque penatibus et magnis <a href="#">dis parturient montes</a>, nascetur ridiculus mus. Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Sed posuere consectetur est at lobortis. Cras mattis consectetur purus sit amet fermentum.</p>
-                    <blockquote>
-                        <p>Curabitur blandit tempus porttitor. <strong>Nullam quis risus eget urna mollis</strong> ornare vel eu leo. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
-                    </blockquote>
-                    <p>Etiam porta <em>sem malesuada magna</em> mollis euismod. Cras mattis consectetur purus sit amet fermentum. Aenean lacinia bibendum nulla sed consectetur.</p>
+                    <p><?php echo $post['body']; ?></p>
 
-                </div><!-- /.blog-post -->
+                </div>
 
             </div><!-- /.blog-main -->
             <?php include('./templates/sidebar.php'); ?>
