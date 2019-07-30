@@ -2,12 +2,23 @@
 require('./database/dbconnect.php');
 $post_id = $_GET['post_id'];
 
-$query = 'SELECT * FROM posts WHERE id = :post_id';
-$stmt = $connection->prepare($query);
-$stmt->bindParam(':post_id', $post_id);
-$stmt->execute();
-$stmt->setFetchMode(PDO::FETCH_ASSOC);
-$post = $stmt->fetch();
+$query1 = 'SELECT * FROM posts WHERE id = :post_id';
+$query2 = 'SELECT * FROM comments WHERE post_id = :post_id';
+
+$stmt1 = $connection->prepare($query1);
+$stmt2 = $connection->prepare($query2);
+
+$stmt1->bindParam(':post_id', $post_id);
+$stmt2->bindParam(':post_id', $post_id);
+
+$stmt1->execute();
+$stmt2->execute();
+
+$stmt1->setFetchMode(PDO::FETCH_ASSOC);
+$stmt2->setFetchMode(PDO::FETCH_ASSOC);
+
+$post = $stmt1->fetch();
+$comments = $stmt2->fetchAll();
 
 
 ?>
@@ -37,6 +48,15 @@ $post = $stmt->fetch();
                     <hr>
                     <p><?php echo $post['body']; ?></p>
 
+                </div>
+
+                <div class="comments">
+                    <ul>
+                        <?php foreach ($comments as $comm) { ?>
+                            <li><strong><?php echo $comm['author'] . ': '; ?></strong><?php echo $comm['text']; ?></li>
+                            <hr>
+                        <?php } ?>
+                    </ul>
                 </div>
 
             </div><!-- /.blog-main -->
