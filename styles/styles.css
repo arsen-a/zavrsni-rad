@@ -1,3 +1,5 @@
+/* Zadatak 4 HTML CSS */
+
 html {
   font-size: 14px;
 }
@@ -18,4 +20,59 @@ h6 {
 .blog-post-title:hover {
   color: #b34848;
   text-decoration: underline;
+}
+
+/* Stilovi za create new post */
+
+textarea:focus,
+input:focus {
+  outline: none;
+}
+
+.form-container {
+  width: 500px;
+}
+
+.create-post-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.create-post-form > div {
+  display: flex;
+  flex-direction: row;
+  align-items: baseline;
+  justify-content: space-between;
+  padding: 10px 0;
+}
+
+.create-post-form > div > h4 {
+  margin: 0;
+}
+
+.create-post-form > div > input {
+  width: 300px;
+  margin-left: 15px;
+  padding: 5px;
+}
+
+.post-body {
+  resize: none;
+  width: 500px;
+  height: 200px;
+  padding: 5px;
+}
+
+.create-post-form > .submit-btn-div {
+  display: flex;
+  justify-content: center;
+}
+
+.submit-btn-div > .submit-btn {
+  margin: 0;
+  border-radius: 5px;
+  border: 1px solid #e05a5a;
+  background-color: #e05a5a;
+  color: white;
+  font-weight: bold;
 }
