@@ -3,7 +3,13 @@ require('./database/dbconnect.php');
 
 $post_id = $_GET['post_id'];
 
-$query1 = 'SELECT * FROM posts WHERE id = :post_id';
+$query1 =
+    "SELECT posts.id AS id, posts.title AS title, posts.body AS body, 
+posts.created_at AS created_at, users.firstName AS firstName, users.lastName as lastName
+FROM posts 
+LEFT JOIN users
+ON posts.author = users.id WHERE posts.id = :post_id";
+
 $query2 = 'SELECT * FROM comments WHERE post_id = :post_id';
 
 $stmt1 = $connection->prepare($query1);
@@ -45,7 +51,7 @@ $comments = $stmt2->fetchAll();
                     <a href="./single-post.php?post_id=<?php echo $post['id']; ?>">
                         <h2 class="blog-post-title"><?php echo $post['title'] ?></h2>
                     </a>
-                    <p class="blog-post-meta"><?php echo $post['created_at'] . " "; ?> by <a href="#"><?php echo " " . $post['author']; ?></a></p>
+                    <p class="blog-post-meta"><?php echo $post['created_at'] . " "; ?> by <a href="#"><?php echo " " . $post['firstName'] . " " . $post['lastName']; ?></a></p>
                     <button type="button" id="del-post-btn" class="btn btn-primary">Delete Post</button>
                     <hr>
                     <p><?php echo $post['body']; ?></p>

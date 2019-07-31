@@ -1,18 +1,26 @@
 <?php
 require('./database/dbconnect.php');
 
+$query1 = "SELECT id, firstName, lastName FROM users";
+$stmt1 = $connection->prepare($query1);
+$stmt1->execute();
+$stmt1->setFetchMode(PDO::FETCH_ASSOC);
+$users = $stmt1->fetchAll();
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $author = $_POST['author'];
+    $user = $_POST['user'];
     $title = $_POST['title'];
     $body = $_POST['body'];
     $created_at = date("Y-m-d");
 
 
-    $query = 'INSERT INTO posts (title, body, author, created_at) VALUES (:title, :body, :author, :created_at)';
+    $query =
+        'INSERT INTO posts (title, body, author, created_at) 
+    VALUES (:title, :body, :author, :created_at)';
     $stmt = $connection->prepare($query);
     $stmt->bindParam(':title', $title);
     $stmt->bindParam(':body', $body);
-    $stmt->bindParam(':author', $author);
+    $stmt->bindParam(':author', $user);
     $stmt->bindParam(':created_at', $created_at);
 
     $stmt->execute();
@@ -43,7 +51,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     </div>
                     <form class="create-post-form" action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST">
                         <div>
-                            <h4>Your full name:</h4><input type="text" id="author" name="author" placeholder="John Doe" required>
+                            <h4>User:</h4>
+                            <select name="user">
+                                <?php foreach ($users as $u) { ?>
+                                    <option value="<?php echo $u['id'] ?>"><?php echo $u['firstName'] . " " . $u['lastName']; ?></option>
+                                <?php } ?>
+                            </select>
                         </div>
                         <div>
                             <h4>Post title:</h4><input type="text" id="title" name="title" placeholder="My new post" required>

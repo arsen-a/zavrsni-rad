@@ -4,10 +4,6 @@ html {
   font-size: 14px;
 }
 
-.blog-masthead {
-  background-color: #b34848;
-}
-
 h1,
 h2,
 h3,
@@ -33,12 +29,14 @@ input:focus {
   width: 500px;
 }
 
-.create-post-form {
+.create-post-form,
+.register-form {
   display: flex;
   flex-direction: column;
 }
 
-.create-post-form > div {
+.create-post-form > div,
+.register-form > div {
   display: flex;
   flex-direction: row;
   align-items: baseline;
@@ -46,11 +44,14 @@ input:focus {
   padding: 10px 0;
 }
 
-.create-post-form > div > h4 {
+.create-post-form > div > h4,
+.register-form > div > h4 {
   margin: 0;
 }
 
-.create-post-form > div > input {
+.create-post-form > div > input,
+.register-form > div > input,
+.create-post-form > div > select {
   width: 300px;
   margin-left: 15px;
   padding: 5px;
@@ -63,7 +64,8 @@ input:focus {
   padding: 5px;
 }
 
-.create-post-form > .submit-btn-div {
+.create-post-form > .submit-btn-div,
+.register-form > .submit-btn-div {
   display: flex;
   justify-content: center;
 }
