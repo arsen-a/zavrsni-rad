@@ -89,8 +89,10 @@ class QueryBuild
                 }
             }
 
-            for ($i = 0; $i < count($queryBinds); $i++) {
-                $stmt->bindParam($queryBinds[$i], $binds[$i]);
+            if (count($queryBinds) === count($binds)) {
+                for ($i = 0; $i < count($queryBinds); $i++) {
+                    $stmt->bindParam($queryBinds[$i], $binds[$i]);
+                }
             }
 
             $stmt->execute();
