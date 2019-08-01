@@ -1,6 +1,8 @@
 <footer class="blog-footer">
-    <p>Blog template built for <a href="https://getbootstrap.com/">Bootstrap</a> by <a href="https://twitter.com/mdo">@mdo</a>.</p>
+    <p>Copyright &copy; 2019</p>
     <p>
-        <a href="#">Back to top</a>
+        <a href="/index.php">Home</a>
+        <a style="padding: 0 10px;" href="/register.php">Register</a>
+        <a href="/create-post.php">Create a post</a>
     </p>
 </footer>

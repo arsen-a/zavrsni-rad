@@ -10,12 +10,15 @@ h3,
 h4,
 h5,
 h6 {
-  color: #b34848;
+  color: #333;
 }
 
 .blog-post-title:hover {
-  color: #b34848;
   text-decoration: underline;
+}
+
+.blog-title {
+  font-family: sans-serif;
 }
 
 /* Stilovi za create new post */
@@ -46,6 +49,7 @@ input:focus {
 
 .create-post-form > div > h4,
 .register-form > div > h4 {
+  color: #999;
   margin: 0;
 }
 
@@ -73,8 +77,8 @@ input:focus {
 .submit-btn-div > .submit-btn {
   margin: 0;
   border-radius: 5px;
-  border: 1px solid #e05a5a;
-  background-color: #e05a5a;
+  /* border: 1px solid #e05a5a;
+  background-color: #e05a5a; */
   color: white;
   font-weight: bold;
 }
@@ -106,8 +110,8 @@ input:focus {
 }
 
 .add-new-comment {
-  border: 1px solid #e05a5a;
-  border-radius: 15px;
+  border: 1px solid darkorange;
+  border-radius: 5px;
   display: flex;
   justify-content: center;
   padding: 10px;
@@ -131,4 +135,47 @@ input:focus {
 .comment-list > li > .btn-default > a {
   color: rgb(179, 0, 0);
   text-decoration: none;
+}
+
+.top-bar {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.blog-name-container {
+  display: flex;
+  flex-direction: row;
+  padding: 0 20px;
+}
+
+.blog-name-container > h2 {
+  font-family: sans-serif;
+}
+
+.name-one {
+  color: orange;
+}
+.name-two {
+  color: darkorange;
+  font-weight: bold;
+}
+
+.blog-name > a:link,
+.blog-name > a:hover {
+  text-decoration: none;
+}
+
+input {
+  border: 1px solid #ddd;
+}
+
+.blog-sidebar {
+  margin-bottom: 15px;
+}
+
+.btn-primary {
+  background-color: #069;
+  border-color: #036;
 }

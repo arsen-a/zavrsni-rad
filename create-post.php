@@ -66,7 +66,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         </div>
 
                         <div class="submit-btn-div">
-                            <input class="submit-btn" id="submitPost" type="submit" value="Create a new post">
+                            <input class="btn btn-primary" id="submitPost" type="submit" value="Create a new post">
                         </div>
 
                     </form>
@@ -76,13 +76,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <?php include('./templates/sidebar.php'); ?>
         </div><!-- /.row -->
         <script>
-            const author = document.getElementById('author').value;
             const title = document.getElementById('title').value;
             const body = document.getElementById('body').value;
             const commentSubmitBtn = document.getElementById('submitPost');
 
             commentSubmitBtn.addEventListener('click', function() {
-                if (author === "" || title === "" || body === "") {
+                if (title === "" || body === "") {
                     alertBox.style.display = 'block';
                 }
             });

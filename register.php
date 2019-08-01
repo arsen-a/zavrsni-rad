@@ -48,7 +48,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         </div>
 
                         <div class="submit-btn-div">
-                            <input class="submit-btn" id="register" type="submit" value="Register">
+                            <input class="btn btn-primary" id="register" type="submit" value="Register">
                         </div>
 
                     </form>

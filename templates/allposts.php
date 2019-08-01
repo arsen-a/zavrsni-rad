@@ -23,7 +23,6 @@ $posts = $stmt->fetchAll();
         <p class="blog-post-meta"><?php echo $p['created_at'] . " "; ?> by <a href="#"><?php echo " " . $p['firstName'] . " " . $p['lastName']; ?></a></p>
         <hr>
         <p><?php echo $p['body']; ?></p>
-        <hr>
 
     </div>
 <?php } ?>

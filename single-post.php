@@ -107,12 +107,13 @@ $comments = $stmt2->fetchAll();
         const comments = document.getElementById("comment-section");
 
         showHideBtn.addEventListener("click", function() {
-            if (comments.style.display === "block") {
-                comments.style.display = "none";
-                showHideBtn.innerHTML = "Show Comments";
-            } else {
+            if (comments.style.display === "none") {
                 comments.style.display = "block";
                 showHideBtn.innerHTML = "Hide Comments";
+
+            } else {
+                comments.style.display = "none";
+                showHideBtn.innerHTML = "Show Comments";
             }
         });
 
@@ -129,6 +130,7 @@ $comments = $stmt2->fetchAll();
 
         const delPostBtn = document.getElementById('del-post-btn');
         const postId = document.getElementById('postId').value;
+
         delPostBtn.addEventListener('click', function() {
             let del = confirm("Do you really want to delete this post?");
             if (del === true) {
