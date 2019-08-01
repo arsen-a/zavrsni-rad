@@ -54,8 +54,10 @@ class QueryBuild
             }
 
             //ZA SVAKI BIND SA DVOTACKOM IZ QUERYJA BINDUJE VREDNOST IZ NIZA $query PARAMETRA
-            for ($i = 0; $i < count($queryBinds); $i++) {
-                $stmt->bindParam($queryBinds[$i], $binds[$i]);
+            if (count($queryBinds) === count($binds)) {
+                for ($i = 0; $i < count($queryBinds); $i++) {
+                    $stmt->bindParam($queryBinds[$i], $binds[$i]);
+                }
             }
 
             $stmt->execute();
