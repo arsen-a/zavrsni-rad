@@ -47,9 +47,21 @@ class QueryBuild
             $queryBinds = [];
             $explodedQuery = explode(' ', $this->query);
 
+            $abc = array_merge(range('A', 'Z'), range('a', 'z'));
+            $abc[] = ':';
+            $abc[] = '_';
+
             foreach ($explodedQuery as $elem) {
-                if ($elem[0] === ':') {
-                    $queryBinds[] = $elem;
+
+                if (strpos($elem, ':') !== false) {
+                    $pos = strpos($elem, ":");
+                    $bind = "";
+
+                    while (in_array($elem[$pos], $abc)) {
+                        $bind .= $elem[$pos];
+                        $pos++;
+                    }
+                    $queryBinds[] = $bind;
                 }
             }
 
@@ -77,15 +89,27 @@ class QueryBuild
     //PRINCIP JE ISTI KAO U fetchMulti METODI ALI VRACA SAMO JEDAN PODATAK
     public function fetchSingle(...$binds)
     {
-        $stmt = $this->conn->getConnection->prepare($this->query);
+        $stmt = $this->connection->prepare($this->query);
 
         if (!is_null($binds)) {
             $queryBinds = [];
             $explodedQuery = explode(' ', $this->query);
 
+            $abc = array_merge(range('A', 'Z'), range('a', 'z'));
+            $abc[] = ':';
+            $abc[] = '_';
+
             foreach ($explodedQuery as $elem) {
-                if ($elem[0] === ':') {
-                    $queryBinds[] = $elem;
+
+                if (strpos($elem, ':') !== false) {
+                    $pos = strpos($elem, ":");
+                    $bind = "";
+
+                    while (in_array($elem[$pos], $abc)) {
+                        $bind .= $elem[$pos];
+                        $pos++;
+                    }
+                    $queryBinds[] = $bind;
                 }
             }
 
@@ -107,32 +131,49 @@ class QueryBuild
 
         return $stmt->fetch();
     }
+
+    public function execQuery(...$binds)
+    {
+        $stmt = $this->connection->prepare($this->query);
+
+        if (!is_null($binds)) {
+            $queryBinds = [];
+            $explodedQuery = explode(' ', $this->query);
+
+            $abc = array_merge(range('A', 'Z'), range('a', 'z'));
+            $abc[] = ':';
+            $abc[] = '_';
+
+            foreach ($explodedQuery as $elem) {
+
+                if (strpos($elem, ':') !== false) {
+                    $pos = strpos($elem, ":");
+                    $bind = "";
+
+                    while (in_array($elem[$pos], $abc)) {
+                        $bind .= $elem[$pos];
+                        $pos++;
+                    }
+                    $queryBinds[] = $bind;
+                }
+            }
+
+            if (count($queryBinds) === count($binds)) {
+                for ($i = 0; $i < count($queryBinds); $i++) {
+                    $stmt->bindParam($queryBinds[$i], $binds[$i]);
+                }
+            }
+
+            $stmt->execute();
+            return;
+        }
+
+        $stmt->execute();
+    }
 }
 
 $getData = new QueryBuild('localhost', 'blog', 'arsen', 'arsenroot');
 $getData->connect();
-$getData->setQuery('SELECT * FROM posts WHERE id = :id AND author = :author');
-$posts = $getData->fetchMulti(8, 1);
-?>
+$getData->setQuery('SELECT * FROM posts WHERE author = :author');
 
-
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
-</head>
-
-<body>
-
-    <?php foreach ($posts as $p) { ?>
-        <div>
-            <?php echo $p['title'] . "<br>" . $p['body']; ?>
-        </div>
-    <?php } ?>
-</body>
-
-</html>
+$posts = $getData->fetchMulti(2);
