@@ -1,17 +1,14 @@
 <?php
-require('./database/dbconnect.php');
+require('./database/query-build.php');
 
-$query = "SELECT posts.id AS id, posts.title AS title, posts.body AS body, 
+$getData->setQuery("SELECT posts.id AS id, posts.title AS title, posts.body AS body, 
           posts.created_at AS created_at, users.firstName AS firstName, users.lastName as lastName
           FROM posts 
           LEFT JOIN users
           ON posts.author = users.id
-          ORDER BY created_at DESC";
+          ORDER BY created_at DESC");
 
-$stmt = $connection->prepare($query);
-$stmt->execute();
-$stmt->setFetchMode(PDO::FETCH_ASSOC);
-$posts = $stmt->fetchAll();
+$posts = $getData->fetchMulti();
 
 ?>
 

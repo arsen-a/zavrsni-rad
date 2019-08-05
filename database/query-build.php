@@ -60,6 +60,10 @@ class QueryBuild
                     while (in_array($elem[$pos], $abc)) {
                         $bind .= $elem[$pos];
                         $pos++;
+
+                        if ($pos > (strlen($elem) - 1)) {
+                            break;
+                        }
                     }
                     $queryBinds[] = $bind;
                 }
@@ -108,6 +112,10 @@ class QueryBuild
                     while (in_array($elem[$pos], $abc)) {
                         $bind .= $elem[$pos];
                         $pos++;
+
+                        if ($pos > (strlen($elem) - 1)) {
+                            break;
+                        }
                     }
                     $queryBinds[] = $bind;
                 }
@@ -153,6 +161,10 @@ class QueryBuild
                     while (in_array($elem[$pos], $abc)) {
                         $bind .= $elem[$pos];
                         $pos++;
+
+                        if ($pos > (strlen($elem) - 1)) {
+                            break;
+                        }
                     }
                     $queryBinds[] = $bind;
                 }
@@ -174,6 +186,3 @@ class QueryBuild
 
 $getData = new QueryBuild('localhost', 'blog', 'arsen', 'arsenroot');
 $getData->connect();
-$getData->setQuery('SELECT * FROM posts WHERE author = :author');
-
-$posts = $getData->fetchMulti(2);

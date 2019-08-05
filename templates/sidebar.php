@@ -1,10 +1,10 @@
 <?php
-require('./database/dbconnect.php');
-$query = "SELECT * FROM posts ORDER BY created_at DESC LIMIT 5";
-$stmt = $connection->prepare($query);
-$stmt->execute();
-$stmt->setFetchMode(PDO::FETCH_ASSOC);
-$latest = $stmt->fetchAll();
+require_once('./database/query-build.php');
+
+$latestPosts = $getData;
+$latestPosts->setQuery("SELECT * FROM posts ORDER BY created_at DESC LIMIT 5");
+
+$latest = $latestPosts->fetchMulti();
 
 ?>
 

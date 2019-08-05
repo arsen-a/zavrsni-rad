@@ -1,31 +1,24 @@
 <?php
-require('./database/dbconnect.php');
+require_once('./database/query-build.php');
+$getData1 = new QueryBuild('localhost', 'blog', 'arsen', 'arsenroot');
+$getData1->connect();
+$getData2 = new QueryBuild('localhost', 'blog', 'arsen', 'arsenroot');
+$getData2->connect();
+
 
 $post_id = $_GET['post_id'];
 
-$query1 =
-    "SELECT posts.id AS id, posts.title AS title, posts.body AS body, 
+$getData2->setQuery("SELECT posts.id AS id, posts.title AS title, posts.body AS body, 
 posts.created_at AS created_at, users.firstName AS firstName, users.lastName as lastName
 FROM posts 
 LEFT JOIN users
-ON posts.author = users.id WHERE posts.id = :post_id";
+ON posts.author = users.id WHERE posts.id = :post_id");
 
-$query2 = 'SELECT * FROM comments WHERE post_id = :post_id';
+$getData1->setQuery('SELECT * FROM comments WHERE post_id = :post_id');
 
-$stmt1 = $connection->prepare($query1);
-$stmt2 = $connection->prepare($query2);
 
-$stmt1->bindParam(':post_id', $post_id);
-$stmt2->bindParam(':post_id', $post_id);
-
-$stmt1->execute();
-$stmt2->execute();
-
-$stmt1->setFetchMode(PDO::FETCH_ASSOC);
-$stmt2->setFetchMode(PDO::FETCH_ASSOC);
-
-$post = $stmt1->fetch();
-$comments = $stmt2->fetchAll();
+$post = $getData2->fetchSingle($post_id);
+$comments = $getData1->fetchMulti($post_id);
 
 
 ?>

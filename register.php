@@ -1,16 +1,13 @@
 <?php
-require('./database/dbconnect.php');
+require_once('./database/query-build.php');
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $fname = $_POST['fname'];
     $lname = $_POST['lname'];
 
-    $query = 'INSERT INTO users (firstName, lastName) VALUES (:fname, :lname)';
-    $stmt = $connection->prepare($query);
-    $stmt->bindParam(':fname', $fname);
-    $stmt->bindParam(':lname', $lname);
+    $getData->setQuery('INSERT INTO users (firstName, lastName) VALUES (:fname, :lname)');
+    $getData->execQuery($fname, $lname);
 
-    $stmt->execute();
     header('Location: /index.php');
 }
 

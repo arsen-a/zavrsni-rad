@@ -1,11 +1,11 @@
 <?php
-require('./database/dbconnect.php');
+require_once('./database/query-build.php');
+$userFetch = $getData;
+$userFetch->connect();
 
-$query1 = "SELECT id, firstName, lastName FROM users";
-$stmt1 = $connection->prepare($query1);
-$stmt1->execute();
-$stmt1->setFetchMode(PDO::FETCH_ASSOC);
-$users = $stmt1->fetchAll();
+$userFetch->setQuery("SELECT id, firstName, lastName FROM users");
+
+$users = $userFetch->fetchMulti();
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $user = $_POST['user'];
@@ -13,17 +13,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $body = $_POST['body'];
     $created_at = date("Y-m-d");
 
+    $getData->setQuery('INSERT INTO posts (title, body, author, created_at) VALUES (:title, :body, :author, :created_at)');
+    $getData->execQuery($title, $body, $user, $created_at);
 
-    $query =
-        'INSERT INTO posts (title, body, author, created_at) 
-    VALUES (:title, :body, :author, :created_at)';
-    $stmt = $connection->prepare($query);
-    $stmt->bindParam(':title', $title);
-    $stmt->bindParam(':body', $body);
-    $stmt->bindParam(':author', $user);
-    $stmt->bindParam(':created_at', $created_at);
-
-    $stmt->execute();
     header('Location: /index.php');
 }
 
